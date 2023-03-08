@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.template.defaultfilters import truncatechars
+
 
 User = get_user_model()
 
@@ -13,5 +15,4 @@ class FlashCard(models.Model):
 
 
     def __str__(self) -> str:
-        return f"{self.question[0:10]}..."
-
+        return truncatechars(self.question, 10)

@@ -5,11 +5,9 @@ from card.models import FlashCard
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from card.serializers import (
-    CreateFlashCardSerializer,
+    ListCreateFlashCardSerializer,
     UpdateFlashCardSerializer,
-    ListFlashCardSerializer,
 )
-
 
 
 class CreateFlashCardView(APIView):
@@ -18,7 +16,7 @@ class CreateFlashCardView(APIView):
 
     def post(self, request):
 
-        serializer = CreateFlashCardSerializer(data=request.data)
+        serializer = ListCreateFlashCardSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -61,6 +59,6 @@ class ListFlashCardsView(APIView):
 
         all_user_flash_cards = get_list_or_404(FlashCard, user__id=user_id)
 
-        serializer = ListFlashCardSerializer(all_user_flash_cards, many=True)
+        serializer = ListCreateFlashCardSerializer(all_user_flash_cards, many=True)
 
         return Response(serializer.data)
